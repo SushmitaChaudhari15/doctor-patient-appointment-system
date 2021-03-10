@@ -7,6 +7,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\DoctorScheduleController;
 use App\Http\Middleware\Doctor1;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,52 +51,52 @@ Route::get('/services', function () {
     return view('front.services');
 });
 
-
-// Route::get('/dashboard', function () {
-//     return view('front.dashboard');
-// });
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/user/dashboard', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('user/dashboard', function () {
     return view('front.dashboard');
 })->name('dashboard');
 
 
 Route::group(['middleware'=>'user_auth'],function(){
-Route::post('appointment_submit',[AppointmentController::class,'appointment_submit']);
+    // Route::get('appointment',[AppointmentController::class,'appointment']);
+Route::get('/appointment/{id}',[AppointmentController::class,'appointment'])->name('front.appointment');;
+ Route::post('appointment_submit',[AppointmentController::class,'appointment_submit']);
+
+
+Route::get('patient/patient_profile',[PatientController::class,'index']);
+Route::post('patient/manage_patient_profile_process',[PatientController::class,'manage_patient_profile_process']);
+Route::get('patient/manage_patient_profile/{id}',[PatientController::class,'manage_patient_profile']);
+
+
 });
 
-Route::middleware(['auth:sanctum', 'verified' ])->get('/doctor/dashboard', function () {
+Route::middleware(['auth:sanctum', 'verified','doctor1' ])->get('/doctor/dashboard', function () {
+    
     return view('doctor.dashboard');
 })->name('doctor.dashboard');
 
 
 Route::group(['middleware'=>'user_auth'],function(){
-    
-Route::get('/doctor/doctor', function () {
-    return view('doctor.doctor');
-});
+ 
+Route::get('/doctor/dashboard',[AppointmentController::class,'indexdash']);
 
+Route::get('/doctor/patient',[PatientController::class,'indexpatient']);
+Route::get('doctor/patient/delete/{id}',[PatientController::class,'deletepatient']);
 
-Route::get('/doctor/patient',[AppointmentController::class,'indexpatient']);
-Route::get('doctor/patient/manage_patient',[AppointmentController::class,'manage_patient']);
-Route::get('doctor/patient/manage_patient/{id}',[AppointmentController::class,'manage_patient']);
-Route::post('doctor/patient/manage_patient_process',[AppointmentController::class,'manage_patient_process'])->name('patient.manage_patient_process');
-Route::get('doctor/patient/delete/{id}',[AppointmentController::class,'deletepatient']);
 
 Route::get('/doctor/appointment',[AppointmentController::class,'index']);
 Route::get('/doctor/appointment/delete/{id}',[AppointmentController::class,'delete']);
 Route::get('/doctor/appointment/status/{status}/{id}',[AppointmentController::class,'status']);
 
-
    
-Route::get('/doctor/schedule',[DoctorController::class,'index']);
-Route::get('doctor/schedule/manage_schedule',[DoctorController::class,'manage_schedule']);
-Route::get('doctor/schedule/manage_schedule/{id}',[DoctorController::class,'manage_schedule']);
-Route::post('doctor/schedule/manage_schedule_process',[DoctorController::class,'manage_schedule_process'])->name('schedule.manage_schedule_process');
-Route::get('doctor/schedule/delete/{id}',[DoctorController::class,'delete']);
+Route::get('/doctor/schedule',[DoctorScheduleController::class,'index']);
+Route::get('/doctor/schedule/status/{status}/{id}',[DoctorScheduleController::class,'status']);
+Route::get('/doctor/schedule/manage_schedule/{id}',[DoctorScheduleController::class,'manage_schedule']);
+Route::post('/doctor/schedule/manage_schedule_process',[DoctorScheduleController::class,'manage_schedule_process'])->name('schedule.manage_schedule_process');
+Route::get('/doctor/schedule/delete/{id}',[DoctorScheduleController::class,'delete']);
 
+Route::get('/doctor/doctor_profile',[DoctorController::class,'index']);
+Route::get('/doctor/doctor_profile_manage/{id}',[DoctorController::class,'doctor_profile_manage']);
+Route::post('/doctor/doctor_profile_manage_process',[DoctorController::class,'doctor_profile_manage_process'])->name('doctor.doctor_profile_manage_process');
 
-
- 
 
 });

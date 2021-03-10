@@ -15,9 +15,10 @@ class CreateDoctorSchedulesTable extends Migration
     {
         Schema::create('doctor_schedules', function (Blueprint $table) {
             $table->id();
-            
-            $table->id();
-
+            $table->string('doc_name');
+            $table->string('available_date');
+            $table->string('available_time');
+            $table->string('available_status');
             $table->timestamps();
         });
     }

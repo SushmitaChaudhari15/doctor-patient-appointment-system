@@ -4,80 +4,61 @@ namespace App\Http\Controllers;
 
 use App\Models\DoctorSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class DoctorScheduleController extends Controller
 {
     public function index()
     {
         $result['data']=DoctorSchedule::all();
-        return view('doctor/doctor_schedule',$result);
+        return view('doctor.doctor_schedule',$result);
     }
-
-    public function manage_department($id='')
+    
+    public function manage_schedule($id)
     {
-        if($id>0){
-            $arr=Doctor::where(['id'=>$id])->get();
-            $result['doctor_department']=$arr['0']->doctor_department;
-            $result['doctor_name']=$arr['0']->doctor_name;
-            $result['doctor_email']=$arr['0']->doctor_email;
-            $result['doctor_age']=$arr['0']->doctor_age;
-            $result['doctor_status']=$arr['0']->doctor_status;
+            $arr=DoctorSchedule::where(['id'=>$id])->get();
+            $result['available_date']=$arr['0']->available_date;
+            $result['available_time']=$arr['0']->available_time;
+            $result['available_status']=$arr['0']->available_status;
             $result['id']=$arr['0']->id;
 
-        }
-        else{
-            
-            $result['doctor_department']=$arr['0']='';
-            $result['doctor_name']=$arr['0']='';
-            $result['doctor_email']=$arr['0']='';
-            $result['doctor_name']=$arr['0']='';
-            $result['doctor_age']=$arr['0']='';
-            $result['id']=0;
-
-        }
-        $result['department']=DB::table('doctors')->where(['doctor_status'=>1])->get();
-        return view('doctor/manage_department',$result);
+       
+        $result['schedule']=DB::table('doctor_schedules')->where(['available_status'=>1])->get();
+        return view('doctor/manage_schedule',$result);
 
     }
   
-    public function manage_department_process(Request $request)
+    public function manage_schedule_process(Request $request)
     {
-      
-       $request->validate([
-        'departname'=>'required',
-        'dname'=>'required',
-        'demail'=>'required',
-        'dage'=>'required',
-        
-
-       ]);
-
-       if($request->post('id')>0){
-           $model=Doctor::find($request->post('id'));
-           $msg="Doctor Updated";
-        }
-        else{
-           $model=new Doctor();
-           $msg="Doctor Inserted";
-
-       }
-       $model->doctor_department=$request->post('departname');
-       $model->doctor_name=$request->post('dname');
-       $model->doctor_email=$request->post('demail');
-       $model->doctor_age=$request->post('dage');
-       $model->doctor_status=1;
+       $model=DoctorSchedule::find($request->post('id'));
+        $msg="Schedule Updated";
+       
+       $model->available_date='';
+       $model->available_time=$request->post('available_time');
+       $model->available_status=1;
        $model->save();
        $request->session()->flash('message',$msg);
-       return redirect('doctor/department');
+       return redirect('doctor/schedule');
 
     }
   
     public function delete(Request $request , $id)
     {
-     $model=Doctor::find($id);
+     $model=DoctorSchedule::find($id);
      $model->delete();
      $request->session()->flash('message','Department Deleted');
-     return redirect('doctor/department');
+     return redirect('doctor/schedule');
+    }
+
+    
+    public function status(Request $request , $available_status,$id)
+    {
+     $model=DoctorSchedule::find($id);
+     $model->available_status=$available_status;
+     $model->save();
+     $request->session()->flash('message','Status Updated');
+     return redirect('doctor/schedule');
     }
 
 }

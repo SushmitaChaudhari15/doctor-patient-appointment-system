@@ -19,8 +19,9 @@ class CreateDoctorsTable extends Migration
             $table->string('doctor_name');
             $table->string('doctor_email');
             $table->string('doctor_age');
-            $table->string('available_date');
-            $table->string('available_time');
+            $table->string('doctor_address');
+            $table->string('doctor_number');
+            $table->string('doctor_gender');
             $table->integer('doctor_status');
             $table->timestamps();
         });

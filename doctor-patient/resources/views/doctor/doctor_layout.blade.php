@@ -40,7 +40,7 @@
                         <span>Admin</span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="profile.html">My Profile</a>
+                        <a class="dropdown-item" href="{{url('doctor/doctor_profile')}}">My Profile</a>
                         <form method="POST" action="{{ route('logout') }}" style=" padding: 15px 18px;">
                             @csrf
                             
@@ -78,9 +78,7 @@
                         <li class="@yield('dashboard_select')">
                             <a href="{{url('doctor/dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                         </li>
-                        <li class="@yield('doctor_select')">
-                            <a href="{{url('doctor/doctor')}}"><i class="fa fa-user-md"></i> <span>Doctors</span></a>
-                        </li>
+                       
                         <li class="@yield('patient_select')">
                             <a href="{{url('doctor/patient')}}"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
                         </li>
@@ -108,6 +106,8 @@
     <script src="{{asset('doctor_assets/js/js-jquery-3.2.1.min.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-popper.min.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-bootstrap.min.js')}}"></script>
+    <script src="{{asset('doctor_assets/js/js-jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('doctor_assets/js/js-dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-jquery.slimscroll.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-Chart.bundle.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-chart.js')}}"></script>

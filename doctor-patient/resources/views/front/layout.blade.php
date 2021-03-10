@@ -56,8 +56,9 @@
                 
                     @auth
                     <span class="text-white">
+                    
                      {{ Auth::user()->name }}
-                 </span>
+                     </span>
                     <li>
                     <form method="POST" action="{{ route('logout') }}" style=" padding: 15px 18px;">
                             @csrf
@@ -68,6 +69,10 @@
                             </a>
                         </form>
                                
+                            </li>
+                            <li>
+                         
+                           <a href="{{url('patient/manage_patient_profile')}}/{{Auth::user()->id}}"> <span class="text-white ">Profile</span>  </a> 
                             </li>
                         <!-- <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a> -->
                     @else
@@ -102,7 +107,7 @@
                 <div class="container">
                     <div class="main-responsive-menu">
                         <div class="logo">
-                            <a href="{{url('dashboard')}}">
+                            <a href="{{url('user/dashboard')}}">
                                 <!-- <img src="images/img-logo.png" alt="logo"></a> -->
                                 <h2>HealthCare</h2>
                         </div>
@@ -111,7 +116,7 @@
             </div>
             <div class="main-navbar">
                 <div class="container-fluid">
-                    <nav class="navbar navbar-expand-md navbar-light"><a class="navbar-brand" href="{{url('dashboard')}}">
+                    <nav class="navbar navbar-expand-md navbar-light"><a class="navbar-brand" href="{{url('/user/dashboard')}}">
                             <!-- <img src="images/img-logo.png" alt="logo"> -->
                             <h2>HealthCare</h2>
 
@@ -119,7 +124,7 @@
                         <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a href="{{url('healthcare')}}" class="nav-link @yield('home_select')">
+                                    <a href="{{url('user/dashboard')}}" class="nav-link @yield('home_select')">
                                         Home                                       
                                     </a>                                   
                                 </li>

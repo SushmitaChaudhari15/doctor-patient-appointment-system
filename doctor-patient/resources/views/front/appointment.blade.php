@@ -29,6 +29,56 @@
 
 
     <section class="emergency-area bg-top ptb-100">
+
+    <div class="container">
+    
+    <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3 m-2">
+                      
+                        <h4 class="page-title">Doctor's Todays Schedule.</h4>
+
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Availability</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><?php
+                                        $today = date('d/m/Y');
+                                        $today = explode('/',$today);
+                                        echo  $nextday = date('d/m/Y',mktime(0,0,0,$today[1],$today[0]+1,$today[2]));
+                                        ?></td>
+                                        <td>10AM to 7 PM</td>
+                                        <td><button type="button" class="btn btn-success">Available</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="text-center">
+                  <h3 class="text-success"> Doctor is Available Now book yor Appointment</h3> 
+                  </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+    </div>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5">
@@ -55,21 +105,35 @@
                         <form action="{{url('appointment_submit')}}" method="post">
                         @csrf
                             <div class="row">
+                                   
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Name" name="uname"
-                                            placeholder="Enter Your Name" required><i class="flaticon-user"></i>
+                                    @if (Route::has('login'))
+                                    @auth
+                                    <input type="text" class="form-control" id="Name" name="uname" value="{{$name}}" >
+                                    @else
+                                    <input type="text" class="form-control" id="Name" name="uname"   placeholder="Enter Name" >
+                                    @endauth
+                                   @endif
+
+                                        <i class="flaticon-user"></i>
                                             @error('uname')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
+                                        <div class="text-danger">
+                                        {{$message}}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Email" name="uemail" placeholder="Enter Email" required><i
-                                            class="flaticon-email"></i>
+                                    @if (Route::has('login'))
+                                    @auth
+                                        <input type="email" class="form-control" id="Email" name="uemail" value="{{$email}}">
+                                        @else
+                                        <input type="email" class="form-control" id="Email" name="uemail"  placeholder="Enter Email" >
+                                    @endauth
+                                   @endif
+                                        <i class="flaticon-email"></i>
                                             @error('uemail')
                         <div class="text-danger">
                           {{$message}}
@@ -79,8 +143,14 @@
                                 </div>
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Phone" name="uno"
-                                            placeholder="Enter Phone Number" required><i class="flaticon-call"></i>
+                                    @if (Route::has('login'))
+                                    @auth
+                                        <input type="text" class="form-control" id="Phone" name="uno" value="{{$user_number}}">
+                                        @else
+                                        <input type="email" class="form-control" id="Phone" name="uno"  placeholder="Mobile Number" >
+                                    @endauth
+                                   @endif
+                                        <i class="flaticon-call"></i>
                                             @error('uno')
                         <div class="text-danger">
                           {{$message}}
@@ -88,21 +158,17 @@
                         @enderror
                                     </div>
                                 </div>
+                               
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Phone" name="uaddress"
-                                            placeholder="Enter Address" required><i class="flaticon-call"></i>
-                                            @error('uaddress')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="Phone" name="uage"
-                                            placeholder="Enter Age" required><i class="flaticon-call"></i>
+                                    @if (Route::has('login'))
+                                    @auth
+                                        <input type="text" class="form-control" id="Phone" name="uage" value="{{$user_age}}">
+                                        @else
+                                        <input type="text" class="form-control" id="Phone" name="uage"  placeholder="Enter Age"  >
+                                    @endauth
+                                   @endif
+                                   <i class="flaticon-user"></i>
                                             @error('uage')
                         <div class="text-danger">
                           {{$message}}
@@ -110,44 +176,20 @@
                         @enderror
                                     </div>
                                 </div>
+                               
+                                 
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                        <i class="flaticon-shield"></i>
-                                        <select name="ucategory" required>
-                                            <option value="">Select Category</option>
-                                            <option value="Cardiologists">Cardiologists</option>
-                                            <option value="Dermatologists">Dermatologists</option>
-                                            <option value="Endocrinologists">Endocrinologists</option>
-                                            <option value="Gastroenterologists">Gastroenterologists</option>
-                                            <option value="Allergists">Allergists</option>
-                                            <option value="Immunologists">Immunologists</option>
-                                        </select>
-                                        @error('ucategory')
+                                        <input type="text" class="form-control" id="Phone" name="usymptoms"
+                                            placeholder="Symptoms" required><i class="flaticon-shield"></i>
+                                            @error('usymptom')
                         <div class="text-danger">
                           {{$message}}
                           </div>
                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <i class="flaticon-doctor"></i>
-                                        <select name="udoctor" required>
-                                            <option value="">Select Doctor</option>
-                                            <option value="Dr. James Adult">Dr. James Adult</option>
-                                            <option value="Dr. James Alison">Dr. James Alison</option>
-                                            <option value="Dr. Peter Adlock">Dr. Peter Adlock</option>
-                                            <option value="Dr. Jelin Alis">Dr. Jelin Alis</option>
-                                            <option value="Dr. Josh Taylor">Dr. Josh Taylor</option>
-                                            <option value="Dr. Steven Smith">Dr. Steven Smith</option>
-                                        </select>
-                                        @error('udoctor')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
-                                    </div>
-                                </div>
+                               
                                 
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
@@ -168,7 +210,7 @@
                                     @if (Route::has('login'))
                                     @auth
                                     <button type="submit" class="default-btn">
-                                            Submit Application
+                                           Book Appointment
                                             <span></span>
                                         </button>
                                     @else
@@ -183,6 +225,7 @@
                                   @endif 
                                     </div>
                                 </div>
+                             
                             </div>
                         </form>
                     </div>
