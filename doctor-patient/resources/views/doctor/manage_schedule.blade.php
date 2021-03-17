@@ -29,8 +29,25 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Available Time</label>
-                                    <input type="text" class="form-control" value="{{$available_time}}"  name="available_time" required>
+                                    <label>Start Time</label>
+                                    <input type="text" class="form-control" value="{{$start_time}}"  name="start_time" required>
+                                    @error('start_time')
+                        <div class="text-danger">
+                          {{$message}}
+                          </div>
+                        @enderror
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>End Time</label>
+                                    <input type="text" class="form-control" value="{{$end_time}}"  name="end_time" required>
+                                    @error('end_time')
+                        <div class="text-danger">
+                          {{$message}}
+                          </div>
+                        @enderror
                                 </div>
                             </div>
                             </div>

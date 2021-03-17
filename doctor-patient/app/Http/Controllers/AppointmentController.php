@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\appointment;
+use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use Auth;
 
 
@@ -13,7 +15,12 @@ class AppointmentController extends Controller
     
     public function index()
     {
-        $result['data']=Appointment::all();
+        $result['data']=DB::table('appointments')
+                ->join('users','appointments.user_id', '=', 'users.id')
+                ->select('appointments.id','appointments.user_date','appointments.user_time','appointments.user_symptoms','appointments.user_status','users.name','users.user_age')
+                ->get();
+
+      
         return view('doctor/appointments',$result);
     }
 
@@ -46,7 +53,10 @@ class AppointmentController extends Controller
 
         }
         $result['patient']=DB::table('appointments')->where(['id'=>$id])->get();
-        return view('front/appointment',$result);
+
+        $doctor['doc']=DB::table('doctor_schedules')->get();
+
+        return view('front/appointment')->with($result)->with($doctor);
 
     }
     
@@ -55,8 +65,7 @@ class AppointmentController extends Controller
     public function indexdash()
     {
         $result['data']=Appointment::all()->where('user_status', 1);
-        $patient_count['count']=DB::table('users')->count();
-
+         $patient_count['count']=DB::table('users')->count();
         $attend_count['acount']=DB::table('appointments')->where('user_status', '<=', 0)->count();
         $pending_count['pcount']=DB::table('appointments')->where('user_status', '<=', 1)->count();
 
@@ -71,30 +80,21 @@ class AppointmentController extends Controller
 
     public function appointment_submit(Request $request)
     {
-        $request->validate([
-            'uname'=>'required',
-            'uemail'=>'required',
-            'uno'=>'required',         
-            'uage'=>'required',
-            'usymptoms'=>'required',
-            'udate'=>'required',
-    
-           ]);
-           
            $res=new appointment;
-           $res->patient_id= Auth::user()->id ;
-           $res->user_name=$request->input('uname');
-           $res->user_email=$request->input('uemail');
-           $res->user_number=$request->input('uno');
-           $res->user_age=$request->input('uage');
+           $res->user_id= Auth::user()->id ;
+           $res->user_time=$request->input('utime');
            $res->user_symptoms=$request->input('usymptoms');
            $res->user_date=$request->input('udate');
            $res->user_status=1;
+
+          
            $res->save();   
            $request->session()->flash('msg','Your Appointment is Booked! Thanks for Appointment :)');          
            $result=Auth::user()->id;
         //    return redirect('/appointment' );
            return redirect()->route('front.appointment', [$result]);
+         
+         
     
     }
 

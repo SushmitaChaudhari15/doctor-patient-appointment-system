@@ -35,7 +35,7 @@
                                 @foreach($data as $list)
                                     <tr>
                                     <td>{{$list->id}}</td>
-                                        <td> {{$list->user_name}}</td>
+                                        <td> {{$list->name}}</td>
                                         <td>{{$list->user_age}}</td>
                                         <td>{{$list->user_symptoms}}</td>
                                         <td>{{$list->user_date}}</td>

@@ -10,9 +10,16 @@
                     </div>
 
                     <div class="col-sm-5 col-6 text-right m-b-30">
+                   @if ($data->count())
                     @foreach($data as $list)
-                        <a href="{{url('doctor/doctor_profile_manage')}}/{{$list->id}}" class="btn btn-primary btn-rounded"> @endforeach<i class="fa fa-plus"></i> Edit
+                       <a href="{{url('doctor/doctor_profile_manage')}}/{{$list->id}}" class="btn btn-primary btn-rounded">     @endforeach  <i class="fa fa-plus"></i> Edit
+                        Profile</a>
+                    
+                     @else
+                        <a href="{{url('doctor/doctor_profile_manage')}}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Add
                             Profile</a>
+                         
+                     @endif
                     </div>
                 </div>
                 <div class="card-box profile-header">

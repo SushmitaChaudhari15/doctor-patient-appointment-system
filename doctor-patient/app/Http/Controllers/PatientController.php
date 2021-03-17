@@ -17,7 +17,7 @@ class PatientController extends Controller
 
     public function indexpatient()
     { 
-        $result['data']=DB::table('users')->get();
+        $result['data']=DB::table('users')->where('utype','USR')->get();
         return view('doctor/patient',$result);
     }
    

@@ -17,8 +17,10 @@ class DoctorController extends Controller
     }
 
     
-    public function doctor_profile_manage($id)
+    public function doctor_profile_manage($id='')
     {
+      
+        if($id>0){
             $arr=Doctor::where(['id'=>$id])->get();
             $result['doctor_name']=$arr['0']->doctor_name;
             $result['doctor_department']=$arr['0']->doctor_department;
@@ -30,6 +32,20 @@ class DoctorController extends Controller
             $result['doctor_image']=$arr['0']->doctor_image;
             $result['id']=$arr['0']->id;
 
+        }
+        else{
+            
+            $result['doctor_name']=$arr['0']='';
+            $result['doctor_department']=$arr['0']='';
+            $result['doctor_email']=$arr['0']='';
+            $result['doctor_age']=$arr['0']='';
+            $result['doctor_address']=$arr['0']='';
+            $result['doctor_gender']=$arr['0']='';
+            $result['doctor_number']=$arr['0']='';
+            $result['doctor_image']=$arr['0']='';
+            $result['id']=0;
+
+        }
        
         $result['schedule']=DB::table('doctors')->where(['doctor_status'=>0])->get();
         return view('doctor/doctor_profile_manage',$result);
@@ -38,9 +54,19 @@ class DoctorController extends Controller
   
     public function doctor_profile_manage_process(Request $request)
     {
-       
-       $model=Doctor::find($request->post('id'));
-        $msg="Profile Updated";
+        
+        // $model=Doctor::find($request->post('id'));
+        // $msg="Profile Updated";
+
+        if($request->post('id')>0){
+            $model=Doctor::find($request->post('id'));
+            $msg="Profile Updated";
+         }
+         else{
+            $model=new Doctor();
+            $msg="Profile Inserted";
+    
+        }
 
         if($request->has('doctor_image')){
             $image=$request->file('doctor_image');
@@ -52,6 +78,8 @@ class DoctorController extends Controller
         
         }
        
+      
+ 
        $model->doctor_name=$request->post('doctor_name');
        $model->doctor_department=$request->post('doctor_department');
        $model->doctor_email=$request->post('doctor_email');

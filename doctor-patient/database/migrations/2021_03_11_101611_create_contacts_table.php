@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDoctorSchedulesTable extends Migration
+class CreateContactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateDoctorSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('doctor_schedules', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('available_date');
-            $table->string('start_time');
-            $table->string('end_time');
-            $table->string('available_status');
+            $table->string('contact_name');
+            $table->string('contact_email');
+            $table->string('contact_number');
+            $table->string('contact_subject');
+            $table->string('contact_message');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateDoctorSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doctor_schedules');
+        Schema::dropIfExists('contacts');
     }
 }

@@ -49,27 +49,44 @@
                                 <thead>
                                     <tr>
                                         <th>Date</th>
-                                        <th>Time</th>
+                                        <th>Time Slot</th>
                                         <th>Availability</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($doc as $list)
                                     <tr>
                                         <td><?php
                                         $today = date('d/m/Y');
                                         $today = explode('/',$today);
                                         echo  $nextday = date('d/m/Y',mktime(0,0,0,$today[1],$today[0]+1,$today[2]));
                                         ?></td>
-                                        <td>10AM to 7 PM</td>
-                                        <td><button type="button" class="btn btn-success">Available</button></td>
+                                        <td>
+                                        {{$list->start_time}} to    {{$list->end_time}}
+                                        
+                                       </td>
+                                    
+                                        <td>
+                                        @if($list->available_status==1)
+                                        <button type="button"  class="btn btn-success">Available</button>
+    
+    
+                                        @elseif($list->available_status==0)
+                                       <button type="button"  class="btn btn-danger">Not Available</button>
+    
+                                        @endif
+                                       </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="col-md-6">
                     <div class="text-center">
-                  <h3 class="text-success"> Doctor is Available Now book yor Appointment</h3> 
+                   
+                  <h3 class="text-success"> Check Doctor is available or not at time and book appointment at that time.</h3> 
+                 
                   </div>
 
                     </div>
@@ -110,70 +127,53 @@
                                     <div class="form-group">
                                     @if (Route::has('login'))
                                     @auth
-                                    <input type="text" class="form-control" id="Name" name="uname" value="{{$name}}" >
+                                    <p class="form-control" id="Name" name="uname">{{$name}}</p>
                                     @else
                                     <input type="text" class="form-control" id="Name" name="uname"   placeholder="Enter Name" >
                                     @endauth
                                    @endif
 
                                         <i class="flaticon-user"></i>
-                                            @error('uname')
-                                        <div class="text-danger">
-                                        {{$message}}
-                                        </div>
-                                        @enderror
+                                         
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
                                     @if (Route::has('login'))
                                     @auth
-                                        <input type="email" class="form-control" id="Email" name="uemail" value="{{$email}}">
+                                        <p class="form-control" id="Email" name="uemail">{{$email}}</p>
                                         @else
                                         <input type="email" class="form-control" id="Email" name="uemail"  placeholder="Enter Email" >
                                     @endauth
                                    @endif
                                         <i class="flaticon-email"></i>
-                                            @error('uemail')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
+                                         
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
                                     @if (Route::has('login'))
                                     @auth
-                                        <input type="text" class="form-control" id="Phone" name="uno" value="{{$user_number}}">
+                                        <p class="form-control" id="Phone" name="uno">{{$user_number}}</p>
                                         @else
                                         <input type="email" class="form-control" id="Phone" name="uno"  placeholder="Mobile Number" >
                                     @endauth
                                    @endif
                                         <i class="flaticon-call"></i>
-                                            @error('uno')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
+                                         
                                     </div>
                                 </div>
                                
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                    @if (Route::has('login'))
-                                    @auth
-                                        <input type="text" class="form-control" id="Phone" name="uage" value="{{$user_age}}">
-                                        @else
-                                        <input type="text" class="form-control" id="Phone" name="uage"  placeholder="Enter Age"  >
-                                    @endauth
-                                   @endif
-                                   <i class="flaticon-user"></i>
-                                            @error('uage')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
+                                    <select  name="utime">
+                                             <option value="" selected >Time Slot</option>
+                                             @foreach($doc as $list)
+                                            <option value="    {{$list->start_time}} to    {{$list->end_time}}">    {{$list->start_time}} to    {{$list->end_time}}</option>
+                                            @endforeach
+                                        </select>
+                                       
+                                        
                                     </div>
                                 </div>
                                
@@ -182,11 +182,7 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="Phone" name="usymptoms"
                                             placeholder="Symptoms" required><i class="flaticon-shield"></i>
-                                            @error('usymptom')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
+                                        
                                     </div>
                                 </div>
                                
@@ -196,11 +192,7 @@
                                         <div class="input-group date" id="datetimepicker">
                                             <input type="text"  name="udate" class="form-control" placeholder="Date" required><span
                                                 class="input-group-addon"></span>
-                                                @error('udate')
-                        <div class="text-danger">
-                          {{$message}}
-                          </div>
-                        @enderror
+                                             
                                         </div>
                                         <i class="flaticon-calendar"></i>
                                     </div>
@@ -209,10 +201,12 @@
                                     <div class="appointment-btn">
                                     @if (Route::has('login'))
                                     @auth
-                                    <button type="submit" class="default-btn">
+                                  
+                                       <button type="submit" class="default-btn">
                                            Book Appointment
                                             <span></span>
                                         </button>
+                                       
                                     @else
                                     @if (Route::has('register'))
                                         <p class="default-btn" onclick="myFunction()">
@@ -296,5 +290,6 @@
 function myFunction() {
   alert("TO Book appointment Please Login!");
 }
+
 </script>
     @endsection

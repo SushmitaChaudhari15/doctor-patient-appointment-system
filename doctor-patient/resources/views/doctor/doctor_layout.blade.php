@@ -33,11 +33,13 @@
                
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
-                        <span class="user-img">
-                            <img class="rounded-circle" src="{{asset('doctor_assets/images/img-user.jpg')}}" width="24" alt="Admin"><span
-                                class="status online"></span>
-                        </span>
-                        <span>Admin</span>
+                        <!-- <span class="user-img">
+                      
+                            <img class="rounded-circle" src="{{asset('storage/media/')}}" width="24" alt="{{Auth::user()->name}}"><span
+                            
+                                class="status online"></span>                            
+                        </span> -->
+                        <span>{{Auth::user()->name}}</span>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{url('doctor/doctor_profile')}}">My Profile</a>

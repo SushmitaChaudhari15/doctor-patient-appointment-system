@@ -146,10 +146,20 @@
                                 </li>
                             </ul>
                             <div class="others-options">
-                                <a href="{{url('appointment')}}" class="default-btn">
+                            @if (Route::has('login'))
+                                @auth
+                                    <a href="{{url('appointment')}}/{{Auth::user()->id}}" class="default-btn">
                                     Get a Quote
-                                    <span></span>
-                                </a>
+                                        <span></span>
+                                    </a>
+                                  @else
+                                   <a href="{{url('appointment')}}" class="default-btn">
+                                   Get a Quote
+                                        <span></span>
+                                    </a>
+                                    @endauth
+                                   @endif
+                              
                             </div>
                         </div>
                     </nav>

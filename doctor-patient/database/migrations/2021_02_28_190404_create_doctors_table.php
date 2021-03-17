@@ -22,6 +22,7 @@ class CreateDoctorsTable extends Migration
             $table->string('doctor_address');
             $table->string('doctor_number');
             $table->string('doctor_gender');
+            $table->string('doctor_image');
             $table->integer('doctor_status');
             $table->timestamps();
         });

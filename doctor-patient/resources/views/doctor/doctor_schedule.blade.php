@@ -12,13 +12,21 @@
                         </div>
                         <h4 class="page-title">Schedule</h4>
                     </div>
-                    <!-- <div class="col-sm-7 col-7 text-right m-b-30">
+                   <div class="col-sm-7 col-7 text-right m-b-30">
                
-                 <a href="{{url('doctor/schedule/manage_schedule')}}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i>
+                <!--   <a href="{{url('doctor/schedule/manage_schedule')}}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i>
                 Add Schedule
             
-                 </a>
-                    </div> -->
+                 </a>-->
+                 @if ($data->count()==3)
+                  <a href=""></a>
+                    
+                     @else
+                        <a href="{{url('doctor/schedule/manage_schedule')}}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Add
+                            Schedule</a>
+                         
+                     @endif
+                    </div> 
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -30,7 +38,8 @@
                                         <th>#</th>
                                        
                                         <th>Available Date</th>
-                                        <th> Available Time</th>
+                                        <th> Start Time</th>
+                                        <th> End Time</th>
                                         <th>Status</th>
                                         <th class="text-right">Action</th>
                                     </tr>
@@ -45,7 +54,10 @@
                                         echo  $nextday = date('d/m/Y',mktime(0,0,0,$today[1],$today[0]+1,$today[2]));
                                         ?></td>
                                         <td>
-                                      {{$list->available_time}}
+                                      {{$list->start_time}}
+                                        </td>
+                                        <td>
+                                      {{$list->end_time}}
                                         </td>
                                        
                                          <td>
@@ -64,9 +76,9 @@
                                             <div class="dropdown dropdown-action">
                                               
                                                 <div class="">
-                                                    <a class="" href="{{url('doctor/schedule/manage_schedule')}}/{{$list->id}}"><button type="button" class=" btn btn-primary"><i
+                                                   <a class="" href="{{url('doctor/schedule/manage_schedule')}}/{{$list->id}}"><button type="button" class=" btn btn-primary"><i
                                                             class="fa fa-pencil m-r-5"></i> Edit</button></a>
-                                                            
+                                                        
                                                     <a class="" href="#" data-toggle="modal"
                                                         data-target="#delete_department"><button type="button" class=" btn btn-danger"><i
                                                             class="fa fa-trash-o m-r-5"></i> Delete </button></a>

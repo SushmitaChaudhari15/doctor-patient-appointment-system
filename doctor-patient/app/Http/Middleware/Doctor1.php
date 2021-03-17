@@ -17,7 +17,7 @@ class Doctor1
     public function handle(Request $request, Closure $next)
     {
 
-        if(session('utype')==="DR1"){
+        if(session('utype')==="DR"){
             return $next($request);
         }
         else{
