@@ -1,8 +1,3 @@
-/*
-Author       : Dreamguys
-Template Name: PreClinic - Medical and Hospital Admin Template
-Version      : 1.0
-*/
 
 /*============================
  [Table of CSS]
@@ -3333,24 +3328,6 @@ a.status-grey {
 	float: right;
 }
 
-/*-----------------
-	27. Payslip
------------------------*/
-
-.payslip-title {
-	margin-bottom: 20px;
-	text-align: center;
-	text-decoration: underline;
-	text-transform: uppercase;
-}
-
-/*-----------------
-	28. Attendance
------------------------*/
-
-.half-day {
-	width: 15px;
-}
 
 /*-----------------
 	29. Inbox

@@ -10,13 +10,11 @@
     <link rel="stylesheet" href="{{asset('front_assets/css/css-fontawesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('front_assets/css/css-flaticon.css')}}">
     <link rel="stylesheet" href="{{asset('front_assets/css/css-nice-select.min.css')}}">
-    <link rel="stylesheet" href="{{asset('front_assets/css/css-odometer.min.css')}}">
     <link rel="stylesheet" href="{{asset('front_assets/css/css-magnific-popup.min.css')}}">
-    <link rel="stylesheet" href="{{asset('front_assets/css/css-owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('front_assets/css/css-owl.theme.default.min.css')}}">
     <link rel="stylesheet" href="{{asset('front_assets/css/css-style.css')}}">
     <link rel="stylesheet" href="{{asset('front_assets/css/css-responsive.css')}}">
-    <title>HealthCare - Telemedicine &amp; Telehealth Services</title>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <title>Medlife</title>
     <link rel="icon" type="image/png" href="{{asset('front_assets/favicons/img-favicon.png')}}">
 </head>
 
@@ -35,11 +33,11 @@
                         <ul class="top-list">
                             <li>
                                 <i class="flaticon-clock"></i>
-                                Mon-Fri 09-18.00
+                                Mon-sun 10-22.00
                             </li>
                             <li>
                                 <i class="flaticon-phone-call"></i>
-                                <a href="tel:821-456-241">Call Us: +821-456-241</a>
+                                <a href="tel:91 9876543211">Call Us: +91 9876543211</a>
                             </li>
                             <li>
                                 <i class="flaticon-paper-plane"></i>
@@ -51,35 +49,37 @@
                     </div>
                     <div class="col-lg-6">
                         <ul class="top-social">  
-                         @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                            @if (Route::has('login'))
+                            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                 
-                    @auth
-                    <span class="text-white">
-                    
-                     {{ Auth::user()->name }}
-                     </span>
+                                @auth
+                                <li>
+
+                                <img class="rounded-circle" src="{{asset('front_assets/images/user.jpg')}}" width="30">
+
+                                <span class="text-white pl-2">
+                                    
+                                    {{ Auth::user()->name }}
+                                </span>
+                                </li>
+
+                                <li>
+                               <a href="{{url('patient/patient_profile')}}/{{Auth::user()->id}}"> <span class="profile">Profile</span>  </a> 
+                                </li>
                     <li>
-                    <form method="POST" action="{{ route('logout') }}" style=" padding: 15px 18px;">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             
                             <a href="{{ route('logout') }}" class="sign-in"  onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Logout') }}
-								<!-- Logout -->
                             </a>
                         </form>
                                
                             </li>
-                            <li>
-                         
-                           <a href="{{url('patient/manage_patient_profile')}}/{{Auth::user()->id}}"> <span class="text-white ">Profile</span>  </a> 
-                            </li>
-                        <!-- <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a> -->
+                            
                     @else
-                        <!-- <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a> -->
 
                         @if (Route::has('register'))
-                            <!-- <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a> -->
                             <li>
                                 <a href="{{ route('login') }}" class="log-in">
                                    Login
@@ -107,26 +107,50 @@
                 <div class="container">
                     <div class="main-responsive-menu">
                         <div class="logo">
-                            <a href="{{url('user/dashboard')}}">
-                                <!-- <img src="images/img-logo.png" alt="logo"></a> -->
-                                <h2>HealthCare</h2>
+                        @if (Route::has('login'))
+                                @auth
+                                <a href="{{url('user/dashboard')}}">
+                                <h2>Medlife</h2></a>
+                                    @else
+                                    <a href="{{url('/')}}">
+                                <h2>Medlife</h2></a>
+                                    @endauth
+                                   @endif
+                           
                         </div>
                     </div>
                 </div>
             </div>
             <div class="main-navbar">
                 <div class="container-fluid">
-                    <nav class="navbar navbar-expand-md navbar-light"><a class="navbar-brand" href="{{url('/user/dashboard')}}">
-                            <!-- <img src="images/img-logo.png" alt="logo"> -->
-                            <h2>HealthCare</h2>
+                    <nav class="navbar navbar-expand-md navbar-light">
+                @if (Route::has('login'))
+                                @auth
+                                <a class="navbar-brand" href="{{url('/user/dashboard')}}">
+                               
+                                    @else
+                                    <a class="navbar-brand" href="{{url('/')}}">
+                             
+                                    @endauth
+                                   @endif
+                       
+                            <h2>Medlife</h2>
 
                         </a>
                         <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
+                                @if (Route::has('login'))
+                                @auth
                                     <a href="{{url('user/dashboard')}}" class="nav-link @yield('home_select')">
                                         Home                                       
-                                    </a>                                   
+                                    </a>
+                                    @else
+                                    <a href="{{url('/')}}" class="nav-link @yield('home_select')">
+                                        Home                                       
+                                    </a>
+                                    @endauth
+                                   @endif
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{url('about')}}" class="nav-link @yield('about_select')">
@@ -136,7 +160,6 @@
                                 <li class="nav-item">
                                     <a href="{{url('services')}}" class="nav-link @yield('services_select')">
                                         Services
-                                        <!-- <i class="fa fa-angle-down"></i> -->
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -144,17 +167,28 @@
                                         Contact
                                     </a>
                                 </li>
+                                @if (Route::has('login'))
+                                @auth
+                                <li class="nav-item">
+                                <a class="nav-link @yield('show_select')" href="{{url('patient/appointment')}}/{{Auth::user()->id}}">
+                                   Appointment</a> 
+
+                                </li>
+                                @endauth
+                                   @endif
+
                             </ul>
                             <div class="others-options">
+                           
                             @if (Route::has('login'))
                                 @auth
                                     <a href="{{url('appointment')}}/{{Auth::user()->id}}" class="default-btn">
-                                    Get a Quote
+                                    Book Appointment
                                         <span></span>
                                     </a>
                                   @else
                                    <a href="{{url('appointment')}}" class="default-btn">
-                                   Get a Quote
+                                   Book Appointment
                                         <span></span>
                                     </a>
                                     @endauth
@@ -176,7 +210,7 @@
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-footer-widget">
-                        <h3>HealthCare</h3>
+                        <h3>Medlife</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore aliqua.</p>
                         <ul class="footer-social">
@@ -209,27 +243,27 @@
                         <ul class="instagram">
                             <li>
                                 <a href="#">
-                                    <img src="{{asset('front_assets/images/instagram-1.jpg')}}" alt="image"></a>
+                                    <img src="{{asset('front_assets/images/foot1.jpg')}}" alt="image"></a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="{{asset('front_assets/images/instagram-2.jpg')}}" alt="image"></a>
+                                    <img src="{{asset('front_assets/images/foot2.jpg')}}" alt="image"></a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="{{asset('front_assets/images/instagram-3.jpg')}}" alt="image"></a>
+                                    <img src="{{asset('front_assets/images/foot3.jpg')}}" alt="image"></a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="{{asset('front_assets/images/instagram-4.jpg')}}" alt="image"></a>
+                                    <img src="{{asset('front_assets/images/foot4.jpg')}}" alt="image"></a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="{{asset('front_assets/images/instagram-1.jpg')}}" alt="image"></a>
+                                    <img src="{{asset('front_assets/images/foot5.jpg')}}" alt="image"></a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="{{asset('front_assets/images/instagram-2.jpg')}}" alt="image"></a>
+                                    <img src="{{asset('front_assets/images/foot6.jpg')}}" alt="image"></a>
                             </li>
                         </ul>
                     </div>
@@ -239,7 +273,7 @@
                         <h3>Useful Links</h3>
                         <ul class="footer-quick-links">
                             <li>
-                                <a href="{{url('heathcare')}}">Home</a>
+                                <a href="{{url('Medlife')}}">Home</a>
                             </li>
                             <li>
                                 <a href="{{url('about')}}">About</a>
@@ -261,19 +295,19 @@
                         <div class="footer-info-contact">
                             <i class="flaticon-call"></i>
                             <h3>Phone</h3>
-                            <span><a href="tel:123456123">+123(456)123</a></span>
+                            <span><a href="tel:91 9876543211">+91 9876543211</a></span>
                         </div>
                         <div class="footer-info-contact">
                             <i class="flaticon-email"></i>
                             <h3>Email</h3>
-                            <span><a href="/cdn-cgi/l/email-protection#8de4e3ebe2cdf9e4e3f7e8ffa3eee2e0"><span
+                            <span>  <a href="/cdn-cgi/l/email-protection#2a424f4646456a43444c4504494547"><span
                                         class="__cf_email__"
-                                        data-cfemail="2940474f46695d4047534c5b074a4644">[email&nbsp;protected]</span></a></span>
-                        </div>
+                                        data-cfemail="573f323b3b38173e3931387934383a">[email&nbsp;protected]</span></a>
+                               </div>
                         <div class="footer-info-contact">
                             <i class="flaticon-pin"></i>
                             <h3>Address</h3>
-                            <span>3254-425 NW-2nd Ave, Miami USA</span>
+                            <span>3254-425 NW-2nd Ave,Pune ,India</span>
                         </div>
                     </div>
                 </div>
@@ -288,7 +322,7 @@
     <div class="copyright-area">
         <div class="container">
             <p>
-                Copyright &copy; 2021 HealthCare. All Rights Reserved. 
+                Copyright &copy; 2021 Medlife. All Rights Reserved. 
             </p>
         </div>
     </div>
@@ -306,15 +340,16 @@
     <script src="{{asset('front_assets/js/js-bootstrap.min.js')}}"></script>
     <script src="{{asset('front_assets/js/js-jquery.meanmenu.js')}}"></script>
     <script src="{{asset('front_assets/js/js-jquery.nice-select.min.js')}}"></script>
-    <script src="{{asset('front_assets/js/js-odometer.min.js')}}"></script>
-    <script src="{{asset('front_assets/js/js-jquery.appear.js')}}"></script>
-    <script src="{{asset('front_assets/js/js-datepicker.min.js')}}"></script>
     <script src="{{asset('front_assets/js/js-jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{asset('front_assets/js/js-owl.carousel.min.js')}}"></script>
-    <script src="{{asset('front_assets/js/js-jquery.ajaxchimp.min.js')}}"></script>
-    <script src="{{asset('front_assets/js/js-form-validator.min.js')}}"></script>
-    <script src="{{asset('front_assets/js/js-contact-form-script.js')}}"></script>
     <script src="{{asset('front_assets/js/js-main.js')}}"></script>
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+     $(document).ready( function () {
+    $('#table_id').DataTable();
+    ordering: true;
+} );
+
+    </script>
 </body>
 
 </html>

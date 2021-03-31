@@ -19,22 +19,19 @@ use App\Http\Middleware\Doctor1;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('/cache', function () {
+//   Artisan::call('cache:clear');
+// });
 
-Route::get('/dashboard_old', function () {
-     return view('dashboard_old');
-});
+// Route::get('/storage', function () {
+//   Artisan::call('storage:link');
+// });
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
 
-Route::get('/', function () {
-    return view('front.dashboard');
-});
+Route::get('/', [DoctorController::class,'dashboard']);
 
-Route::get('/about', function () {
-    return view('front.about');
-});
+
+Route::get('/about',[DoctorController::class,'about']);
 
 Route::get('/contact', function () {
     return view('front.contact');
@@ -48,27 +45,28 @@ Route::get('/services', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
-    Route::get('user/dashboard', function() {
-    return view('front.dashboard');
-    })->name('dashboard');
+
+    Route::get('user/dashboard',[DoctorController::class,'dashboard'])
+  ->name('dashboard');
 
     Route::get('/appointment/{id}',[AppointmentController::class,'appointment'])->name('front.appointment');
     Route::post('appointment_submit',[AppointmentController::class,'appointment_submit']);
+    Route::get('patient/appointment/{id}',[AppointmentController::class,'show_appointment']);
     
     
-    Route::get('patient/patient_profile',[PatientController::class,'index']);
+    Route::get('patient/patient_profile/{id}',[PatientController::class,'index'])->name('patient/patient_profile');
     Route::post('patient/manage_patient_profile_process',[PatientController::class,'manage_patient_profile_process']);
     Route::get('patient/manage_patient_profile/{id}',[PatientController::class,'manage_patient_profile']);
+  
 });
 
 
-
-Route::middleware(['auth:sanctum', 'verified','doctor1' ])->group(function() {
+Route::middleware(['auth:sanctum', 'verified', 'doctor1' ])->group(function() {
     Route::get('/doctor/dashboard', function () {
                 return view('doctor.dashboard');
             })->name('doctor.dashboard');
 
-     Route::get('/doctor/dashboard',[AppointmentController::class,'indexdash']);
+     Route::get('/doctor/dashboard',[DoctorController::class,'doctordash']);
 
     Route::get('/doctor/patient',[PatientController::class,'indexpatient']);
     Route::get('doctor/patient/delete/{id}',[PatientController::class,'deletepatient']);
@@ -91,5 +89,17 @@ Route::middleware(['auth:sanctum', 'verified','doctor1' ])->group(function() {
     Route::get('/doctor/doctor_profile_manage/{id}',[DoctorController::class,'doctor_profile_manage']);
     Route::post('/doctor/doctor_profile_manage_process',[DoctorController::class,'doctor_profile_manage_process'])->name('doctor.doctor_profile_manage_process');
 
+    Route::get('/doctor/report',[PatientController::class,'report']);
 
+    Route::get('/check_date/{id}',[PatientController::class,'check_date']);
+    
+    Route::get('/report_patient',[PatientController::class,'total_patient']);
+
+    Route::get('/report_appointment',[PatientController::class,'total_appointment']);
+
+    Route::get('/report_attend_patient',[PatientController::class,'total_attend_patient']);
+
+    Route::get('/report_pending_patient',[PatientController::class,'total_pending_patient']);
+
+   
 });

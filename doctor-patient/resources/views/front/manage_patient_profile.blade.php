@@ -2,62 +2,16 @@
 @section('container')
 @section('user_profile','active')
 
-    <div class=" services-area sign-in-area ptb-100">
+
+<div class="sign-in-area ptb-100">
         <div class="container">
             <div class="sign-in-form">
                  <div class="sign-in-title">
-                 <h2 style="color: #ffc107!important;">{{session('message')}}</h2>    
-                    <h2>Profile</h2>
+                    
+                    <h2>Update Profile</h2>
                 </div>
-                <div class="row ">
-                    <div class="col-lg-12 m-3">
-                    <label for="">Name:-
-                   <span  style="color: #0f123b; font-family: rubik, sans-serif; font-weight: 700; margin-left:15px;">
-                   {{ Auth::user()->name }}</span></label>
-                   </div>
 
-                   <div class="col-lg-12 m-3">
-                   <label for="">Email:-
-                   <span style="color: #0f123b; font-family: rubik, sans-serif; font-weight: 700;margin-left:15px;">
-                   {{ Auth::user()->email }}</span></label>
-                    </div>
-
-                    <div class="col-lg-12 m-3">
-                   <label for="">Mobile No.:-
-                   <span style="color: #0f123b; font-family: rubik, sans-serif; font-weight: 700;margin-left:15px;">
-                   {{ $user_number }}</span></label>
-                    </div>
-
-                    <div class="col-lg-12 m-3">
-                   <label for="">Address:-
-                   <span style="color: #0f123b; font-family: rubik, sans-serif; font-weight: 700;margin-left:15px;">
-                   {{ $user_address }}</span></label>
-                    </div>
-
-                    <div class="col-lg-12 m-3">
-                   <label for="">Age:-
-                   <span style="color: #0f123b; font-family: rubik, sans-serif; font-weight: 700;margin-left:15px;">
-                   {{ $user_age }}</span></label>
-                    </div>
-
-                    <div class="col-lg-12 m-3">
-                   <label for="">Gender:-
-                   <span style="color: #0f123b; font-family: rubik, sans-serif; font-weight: 700;margin-left:15px;">
-                   {{ $user_gender }}</span></label>
-                    </div>
-                    <div class="col-lg-12">
-                   
-                            <div class="send-btn">
-                                <a href="{{url('patient/manage_patient_profile')}}/{{Auth::user()->id}}" type="submit" class="default-btn">
-                            
-                                  Update Profile
-                                  <span></span> 
-                            </a>
-                          
-                            </div>
-                    </div>
-
-                <!-- <form method="post" action="{{url('patient/manage_patient_profile_process')}}"> 
+                <form method="post" action="{{url('patient/manage_patient_profile_process')}}"> 
                 @csrf
                     <div class="row">
                     <div class="col-lg-12">
@@ -109,7 +63,7 @@
                                   <span></span> 
                             </button>
                           
-                            </div> -->
+                            </div> 
                             <input type="hidden" name="id" value="{{$id}}">
                         </div>
                     </div>

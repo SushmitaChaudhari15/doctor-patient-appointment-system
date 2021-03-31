@@ -5,25 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('front_assets/favicons/img-favicon.png')}}">
-    <title>Heathcare  &amp; Hospital</title>
+    <title>Medlife</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('doctor_assets/css/css-bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('doctor_assets/css/css-font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('doctor_assets/css/css-dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('doctor_assets/css/css-style.css')}}">
-    <!--[if lt IE 9]>
-		<script src="assets/js/html5shiv.min.js"></script>
-		<script src="assets/js/respond.min.js"></script>
-	<![endif]-->
+    
 </head>
 
 <body>
     <div class="main-wrapper">
         <div class="header">
             <div class="header-left">
-                <a href="index.html" class="logo">
-                    <img src="{{asset('doctor_assets/images/img-logo.png')}}" width="35" height="35"
-                        alt=""><span>HealthCare</span>
+                <a href="{{url('/doctor/dashboard')}}" class="logo">
+                        <span>Medlife</span>
                 </a>
             </div>
             <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
@@ -33,12 +29,12 @@
                
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
-                        <!-- <span class="user-img">
-                      
-                            <img class="rounded-circle" src="{{asset('storage/media/')}}" width="24" alt="{{Auth::user()->name}}"><span
-                            
-                                class="status online"></span>                            
-                        </span> -->
+                        <span class="user-img">
+                       @foreach($name as $photo)
+                            <img class="rounded-circle" src="{{asset('storage/media/'.$photo->doctor_image)}}" width="24" alt="">
+                            @endforeach
+                            <span class="status online"></span>                            
+                        </span>
                         <span>{{Auth::user()->name}}</span>
                     </a>
                     <div class="dropdown-menu">
@@ -48,10 +44,8 @@
                             
                             <a href="{{ route('logout') }}" class="dropdown-item"  onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Logout') }}
-								<!-- Logout -->
                             </a>
                         </form>
-                        <!-- <a class="dropdown-item" href="login.html">Logout</a> -->
                     </div>
                 </li>
             </ul>
@@ -65,10 +59,8 @@
                             
                             <a href="{{ route('logout') }}" class="dropdown-item"  onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Logout') }}
-								<!-- Logout -->
                             </a>
                         </form>
-                    <!-- <a class="dropdown-item" href="login.html">Logout</a> -->
                 </div>
             </div>
         </div>
@@ -88,19 +80,20 @@
                             <a href="{{url('doctor/appointment')}}"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
                         </li>
                         <li class="@yield('schedule_select')">
-                            <a href="{{url('doctor/schedule')}}"><i class="fa fa-calendar-check-o"></i> <span>Doctor
-                                    Schedule</span></a>
+                            <a href="{{url('doctor/schedule')}}"><i class="fa fa-calendar-check-o"></i> <span>Time Schedule</span></a>
+                        </li>
+                        <li class="@yield('report_select')">
+                            <a href="{{url('doctor/report')}}"><i class="fa fa-flag-o"></i> <span>Reports</span></a>
                         </li>
                       
                       
-                       
                     </ul>
                 </div>
             </div>
         </div>
 
         @section('container')
-        @show
+         @show
 
 
     </div>
@@ -111,8 +104,6 @@
     <script src="{{asset('doctor_assets/js/js-jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-jquery.slimscroll.js')}}"></script>
-    <script src="{{asset('doctor_assets/js/js-Chart.bundle.js')}}"></script>
-    <script src="{{asset('doctor_assets/js/js-chart.js')}}"></script>
     <script src="{{asset('doctor_assets/js/js-app.js')}}"></script>
     
 

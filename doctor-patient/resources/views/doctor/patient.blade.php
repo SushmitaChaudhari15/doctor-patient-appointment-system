@@ -5,11 +5,11 @@
 
         <div class="page-wrapper">
             <div class="content">
+            <div class="text-center">
+                        <h2 class="text-danger">{{session('message')}}</h2>
+                    </div>
                 <div class="row">
                     <div class="col-sm-5 col-5">
-                    <div class="text-center">
-                        <h3 class="text-danger">{{session('message')}}</h3>
-                        </div>
                         <h4 class="page-title">Patients</h4>
                     </div>
                     <!-- <div class="col-sm-7 col-7 text-right m-b-30">
@@ -53,7 +53,7 @@
 
                                             <div class="dropdown dropdown-action">
                                               
-                                                <div class="">
+                                                <div>
                                                 <a class="" href="#" data-toggle="modal"
                                                         data-target="#delete_department"><button type="button" class=" btn btn-danger"><i
                                                             class="fa fa-trash-o m-r-5"></i> Delete </button></a>
@@ -73,7 +73,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body text-center">
-                        <img src="images/img-sent.png" alt="" width="50" height="46">
+                        <img src="{{asset('doctor_assets/images/img-sent.png')}}" alt="" width="50" height="46">
                         <h3>Are you sure want to delete this Patient?</h3>
                         <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
                         @foreach($data as $list)

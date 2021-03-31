@@ -19,17 +19,14 @@ class AppointmentController extends Controller
                 ->join('users','appointments.user_id', '=', 'users.id')
                 ->select('appointments.id','appointments.user_date','appointments.user_time','appointments.user_symptoms','appointments.user_status','users.name','users.user_age')
                 ->get();
-
+                $doctor_name['name']=DB::table('doctors')->get();
       
-        return view('doctor/appointments',$result);
+        return view('doctor/appointments')->with($result)->with($doctor_name);
     }
 
     public function appointment($id='')
     {
-        // $result['user']=DB::table('users')->get();
-        // return view('front/appointment',$result);
-
-        
+       
         if($id>0){
             $arr=DB::table('users')->where(['id'=>$id])->get();
             $result['name']=$arr['0']->name;
@@ -62,15 +59,6 @@ class AppointmentController extends Controller
     
     
 
-    public function indexdash()
-    {
-        $result['data']=Appointment::all()->where('user_status', 1);
-         $patient_count['count']=DB::table('users')->count();
-        $attend_count['acount']=DB::table('appointments')->where('user_status', '<=', 0)->count();
-        $pending_count['pcount']=DB::table('appointments')->where('user_status', '<=', 1)->count();
-
-        return view('doctor/dashboard')->with($result)->with($patient_count)->with($attend_count)->with($pending_count);
-    }
     public function indexpatient()
     { 
         $result['data']=Appointment::all();
@@ -80,22 +68,37 @@ class AppointmentController extends Controller
 
     public function appointment_submit(Request $request)
     {
-           $res=new appointment;
-           $res->user_id= Auth::user()->id ;
-           $res->user_time=$request->input('utime');
-           $res->user_symptoms=$request->input('usymptoms');
-           $res->user_date=$request->input('udate');
-           $res->user_status=1;
-
-          
-           $res->save();   
-           $request->session()->flash('msg','Your Appointment is Booked! Thanks for Appointment :)');          
-           $result=Auth::user()->id;
-        //    return redirect('/appointment' );
-           return redirect()->route('front.appointment', [$result]);
-         
-         
-    
+        
+        $today = date('d/m/Y');
+           $today = explode('/',$today);
+           $nextday = date('d/m/Y',mktime(0,0,0,$today[1],$today[0]+1,$today[2]));
+           
+            $schedule['data']=DB::table('doctor_schedules')->get();
+             foreach( $schedule['data'] as $list)
+            if($request->input('utime')==$list->start_time . ' to ' . $list->end_time){
+              
+            $result1=Appointment::select('*')->where('user_date','=',$nextday)->Where('user_time','=',$list->start_time . ' to ' . $list->end_time)->get()->count();
+            
+            if( $result1===3){
+                $request->session()->flash('msg','This slot is fulled ! Please try another slot');          
+                $result=Auth::user()->id;
+                return redirect()->route('front.appointment', [$result]);
+            }
+            else{
+                $res=new appointment;
+                      $res->user_id= Auth::user()->id ;
+                      $res->user_time=$request->input('utime');
+                      $res->user_symptoms=$request->input('usymptoms');
+                      $res->user_date=$nextday ;
+                      $res->user_status=1;
+                      $res->save();   
+                      $request->session()->flash('msg','Your Appointment is Booked ! Thanks for Appointment ');          
+                      $result=Auth::user()->id;
+                      return redirect()->route('front.appointment', [$result]);
+        }
+        }
+        
+        
     }
 
 
@@ -120,5 +123,11 @@ class AppointmentController extends Controller
     }
 
    
+    public function show_appointment($id)
+    {
+        $result['data']=Appointment::all()->where('user_id', $id);
+        return view('front.show_appointment',$result);
+    }
+    
 
 }

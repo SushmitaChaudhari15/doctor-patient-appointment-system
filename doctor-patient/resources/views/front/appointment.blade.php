@@ -8,7 +8,7 @@
                     <div class="page-title-content">
                         <h2>Appointment</h2>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{url('user/dashboard')}}">Home</a></li>
                             <li>Appointment</li>
                         </ul>
                         @if (Route::has('login'))
@@ -16,7 +16,7 @@
                                    
                                     @else
                                     @if (Route::has('register'))
-                                    <h3 class="text-warning">To make an Appointment kindly Login/ Ragister :) </h3>
+                                    <h3 class="text-warning">To make an Appointment kindly Login/ Ragister </h3>
                                         @endif
                                      @endauth 
                                   @endif 
@@ -28,23 +28,18 @@
     </div>
 
 
-    <section class="emergency-area bg-top ptb-100">
-
-    <div class="container">
-    
-    <div class="page-wrapper">
-            <div class="content">
-                <div class="row">
-                    <div class="col-sm-4 col-3 m-2">
-                      
-                        <h4 class="page-title">Doctor's Todays Schedule.</h4>
-
-                    </div>
-                   
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="table-responsive">
+  
+    <section class="about-area pt-100">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <!-- <div class="about-image">
+                        <img src="{{asset('front_assets/images/img-about-3.jpg')}}" alt="image">
+                    </div> -->
+                    <div class="about-content">
+                    <h3>Doctor's Schedule.</h3>
+                    
+                        <div class="table-responsive emergency-form">
                             <table class="table table-striped custom-table">
                                 <thead>
                                     <tr>
@@ -69,8 +64,7 @@
                                         <td>
                                         @if($list->available_status==1)
                                         <button type="button"  class="btn btn-success">Available</button>
-    
-    
+                                       
                                         @elseif($list->available_status==0)
                                        <button type="button"  class="btn btn-danger">Not Available</button>
     
@@ -81,21 +75,23 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="text-center">
                    
-                  <h3 class="text-success"> Check Doctor is available or not at time and book appointment at that time.</h3> 
-                 
-                  </div>
-
+                   </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <h3>To Book an appointment Please check doctor is available or not for particular time slot </h3>
+                       <h5 class="text-danger mt-5">Note: Please Book appointment before 24hrs.</h5>
                     </div>
                 </div>
             </div>
         </div>
-        
-    
-    </div>
+    </section>
+
+
+
+    <section class="emergency-area bg-top ptb-100">
+
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5">
@@ -103,12 +99,7 @@
                         <div class="image">
                             <img src="{{asset('front_assets/images/img-emergency.jpg')}}" alt="image">
                         </div>
-                        <div class="content">
-                            <h3>Emergency Blood Test in 30 Minutes</h3>
-                            <p>
-                                <a href="tel:821-456-321"><b>Contact Us:</b> +821-456-321</a>
-                            </p>
-                        </div>
+                       
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -166,10 +157,31 @@
                                
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                    <select  name="utime">
-                                             <option value="" selected >Time Slot</option>
+                                        <!-- <div class="input-group date" id="datetimepicker"> -->
+                                            <!-- <input type="text"  name="udate" value="" class="form-control" placeholder="Date" required><span
+                                                class="input-group-addon"></span> -->
+                                                <p   class="form-control" ><?php
+                                        $today = date('d/m/Y');
+                                        $today = explode('/',$today);
+                                        echo  $nextday = date('d/m/Y',mktime(0,0,0,$today[1],$today[0]+1,$today[2]));?>
+                                         </p>
+                                             
+                                        <!-- </div> -->
+                                        <i class="flaticon-calendar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                    <select  name="utime" required>
+                                             <option value="">Time Slot</option>
                                              @foreach($doc as $list)
-                                            <option value="    {{$list->start_time}} to    {{$list->end_time}}">    {{$list->start_time}} to    {{$list->end_time}}</option>
+                                            <option value="  @if($list->available_status==1)
+                                             {{$list->start_time}} to {{$list->end_time}}
+                                             @endif">   
+                                            @if($list->available_status==1)
+                                             {{$list->start_time}} to {{$list->end_time}}
+                                             @endif
+                                             </option>
                                             @endforeach
                                         </select>
                                        
@@ -185,34 +197,29 @@
                                         
                                     </div>
                                 </div>
-                               
                                 
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <div class="input-group date" id="datetimepicker">
-                                            <input type="text"  name="udate" class="form-control" placeholder="Date" required><span
-                                                class="input-group-addon"></span>
-                                             
-                                        </div>
-                                        <i class="flaticon-calendar"></i>
-                                    </div>
-                                </div>
                                 <div class="col-12">
                                     <div class="appointment-btn">
                                     @if (Route::has('login'))
                                     @auth
-                                  
-                                       <button type="submit" class="default-btn">
-                                           Book Appointment
-                                            <span></span>
-                                        </button>
-                                       
+                                           @if( is_null($user_number) )
+                                                <p class="default-btn" onclick="blank()">
+                                                    Book Appointment
+                                                    <span></span>
+                                                </p>
+                                                    
+                                            @else
+                                            <button type="submit" class="default-btn">
+                                                    Book Appointment
+                                                        <span></span>
+                                                    </button>
+                                            @endif        
                                     @else
                                     @if (Route::has('register'))
                                         <p class="default-btn" onclick="myFunction()">
                                             Submit Application
                                             <span></span>
-</p>
+                                        </p>
 
                                         @endif
                                      @endauth 
@@ -223,73 +230,20 @@
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
-    
-    <section class="about-area ptb-100">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="about-image">
-                        <img src="{{asset('front_assets/images/img-about-3.jpg')}}" alt="image">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="about-content">
-                        <span>About Us</span>
-                        <h3>Connect to Call a Doctor by Video or Audio During the COVID-19 Pandemic</h3>
-                        <p>Many healthcare systems around the world together with government agencies and startup
-                            companies are building and delivering Telehealth solutions the future of non-emergency and
-                            routine healthcare delivery</p>
-                        <ul class="about-features two">
-                            <li>
-                                <span>
-                                    <i class="flaticon-doctor"></i>
-                                    Orthopedic Solutions
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    <i class="flaticon-worm"></i>
-                                    Chronic Disease
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    <i class="flaticon-cough"></i>
-                                    COVID-19 Test
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    <i class="flaticon-blood-test"></i>
-                                    Diabetic Test
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    <i class="flaticon-family"></i>
-                                    Family Solutions
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    <i class="flaticon-insurance"></i>
-                                    Medical Questions
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  
     <script>
 function myFunction() {
   alert("TO Book appointment Please Login!");
 }
+
+  function blank() {
+    alert("Number is not Filled! Please Update your Profile");
+  }
 
 </script>
     @endsection

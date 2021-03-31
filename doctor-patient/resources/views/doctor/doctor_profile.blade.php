@@ -22,6 +22,10 @@
                      @endif
                     </div>
                 </div>
+
+                <div class="text-center">
+                        <h2 class="text-danger">{{session('message')}}</h2>
+                    </div>
                 <div class="card-box profile-header">
                     <div class="row">
                         <div class="col-md-12">
@@ -32,7 +36,6 @@
                                     @if($list->doctor_image!='')
                                     <img class="avatar" src="{{asset('storage/media/'.$list->doctor_image)}}" ></td>      
                                     @endif
-                                        <!-- <img class="avatar" src="images/img-doctor-03.jpg" alt=""> -->
                                     </div>
                                 </div>
                                 <div class="profile-basic">

@@ -12,7 +12,8 @@ class DoctorScheduleController extends Controller
     public function index()
     {
         $result['data']=DoctorSchedule::all();
-        return view('doctor.doctor_schedule',$result);
+        $doctor_name['name']=DB::table('doctors')->get();
+        return view('doctor.doctor_schedule')->with($result)->with($doctor_name);
     }
     
     public function manage_schedule($id='')
@@ -35,16 +36,15 @@ class DoctorScheduleController extends Controller
 
         }
        
-        $result['schedule']=DB::table('doctor_schedules')->where(['available_status'=>1])->get();
-        return view('doctor/manage_schedule',$result);
+        $result['schedule']=DB::table('doctor_schedules')->get();
+        $doctor_name['name']=DB::table('doctors')->get();
+        return view('doctor/manage_schedule')->with($result)->with($doctor_name);
 
     }
   
     public function manage_schedule_process(Request $request)
     {
-    //    $model=DoctorSchedule::find($request->post('id'));
-    //     $msg="Schedule Updated";
-   
+
 
         if($request->post('id')>0){
             $model=DoctorSchedule::find($request->post('id'));
@@ -55,7 +55,10 @@ class DoctorScheduleController extends Controller
             $msg="Schedule Inserted";
     
         }
-       $model->available_date='';
+        $today = date('d/m/Y');
+        $today = explode('/',$today);
+       $nextday = date('d/m/Y',mktime(0,0,0,$today[1],$today[0]+1,$today[2]));
+       $model->available_date=  $nextday;
        $model->start_time=$request->post('start_time');
        $model->end_time=$request->post('end_time');
        $model->available_status=1;

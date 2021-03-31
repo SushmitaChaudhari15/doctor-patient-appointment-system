@@ -52,7 +52,11 @@
                             </div>
                             </div>
                                 <div class="text-right">
+                                @if ($schedule->count()==3)
                                     <button type="submit" class="btn btn-primary">Update</button>
+                                  @else
+                                  <button type="submit" class="btn btn-primary">Add</button>
+                                  @endif
                                 </div>
                                 <input type="hidden" name="id" value="{{$id}}">
                             </form>

@@ -29,9 +29,11 @@
                             <i class="flaticon-email"></i>
                         </div>
                         <h3>Email Here</h3>
-                        <p><a href="/cdn-cgi/l/email-protection#cbaaafa6a2a58bbfa2a5b1aeb9e5a8a4a6"><span
-                                    class="__cf_email__"
-                                    data-cfemail="e687828b8f88a6928f889c8394c885898b">[email&nbsp;protected]</span></a>
+                        <p> 
+                                <a href="/cdn-cgi/l/email-protection#2a424f4646456a43444c4504494547"><span
+                                        class="__cf_email__"
+                                        data-cfemail="573f323b3b38173e3931387934383a">[email&nbsp;protected]</span></a>
+                        
                         </p>
                         <p><a href="/cdn-cgi/l/email-protection#4f262129200f3b2621352a3d612c2022"><span
                                     class="__cf_email__"
@@ -45,7 +47,8 @@
                             <i class="flaticon-pin"></i>
                         </div>
                         <h3>Location Here</h3>
-                        <p>2750 Quadra Street Victoria, <br> India</p>
+                        <p>3254-425 NW-2nd Ave,Pune 
+<br> India</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-0 offset-md-3 offset-sm-3">
@@ -54,8 +57,8 @@
                             <i class="flaticon-phone-call"></i>
                         </div>
                         <h3>Call Here</h3>
-                        <p><a href="tel:1234567890">+91 456 7890</a></p>
-                        <p><a href="tel:2414524526">+91 452 4526</a></p>
+                        <p><a href="tel:1234567890">+91 9876543211</a></p>
+                        <p><a href="tel:2414524526">+91 45254 45246</a></p>
                     </div>
                 </div>
             </div>

@@ -33,7 +33,7 @@ class ContactController extends Controller
            $res->contact_subject=$request->input('cmsg_subject');
            $res->contact_message=$request->input('cmessage');
            $res->save();   
-           $request->session()->flash('msg','Thanks for Contact us :)');          
+           $request->session()->flash('msg','Thanks for Contact us');          
            return redirect('/contact');
     
     }

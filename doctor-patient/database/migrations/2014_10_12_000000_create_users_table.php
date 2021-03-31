@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('user_gender')->default('gender');
             $table->bigInteger('user_number')->nullable();;
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->text('profile_photo_path')->nullable();
+            // $table->foreignId('current_team_id')->nullable();
+            // $table->text('profile_photo_path')->nullable();
             $table->string('utype')->default('USR')->comment('USR foe user and DR for doctor');
             $table->timestamps();
         });

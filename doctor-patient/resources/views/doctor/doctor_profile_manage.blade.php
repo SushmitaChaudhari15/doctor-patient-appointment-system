@@ -68,7 +68,8 @@
                                     <label>Gender</label>
                                     <input type="text" class="form-control" value="{{$doctor_gender}}"  name="doctor_gender" required>
                                 </div>
-                            </div><div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Image</label>
                                     <input type="file" class="form-control" value="{{$doctor_image}}"  name="doctor_image">

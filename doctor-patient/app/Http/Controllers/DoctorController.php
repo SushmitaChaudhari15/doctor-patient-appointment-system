@@ -13,10 +13,41 @@ class DoctorController extends Controller
     public function index()
     {
         $result['data']=doctor::all();
-        return view('doctor.doctor_profile',$result);
+        $doctor_name['name']=DB::table('doctors')->get();
+        return view('doctor.doctor_profile')->with($result)->with($doctor_name);
     }
 
     
+   
+
+    public function dashboard()
+    {
+        $result['data']=doctor::all();
+        return view('front.dashboard',$result);
+    }
+
+    public function about()
+    {
+        $result['data']=doctor::all();
+        return view('front.about',$result);
+    }
+
+    
+    public function doctordash()
+    {
+        $patient_count['count']=DB::table('users')->count();
+        $attend_count['acount']=DB::table('appointments')->where('user_status', '<=', 0)->count();
+        $pending_count['pcount']=DB::table('appointments')->where('user_status', '<=', 1)->count();
+
+        $result['data']=DB::table('appointments')->where('user_status', 1)
+        ->join('users','appointments.user_id', '=', 'users.id')
+        ->select('appointments.user_date','appointments.user_time','users.name')
+        ->get();
+        $doctor_name['name']=DB::table('doctors')->get();
+        return view('doctor/dashboard')->with($result)->with($patient_count)->with($attend_count)->with($pending_count)->with($doctor_name);
+    }
+
+
     public function doctor_profile_manage($id='')
     {
       
@@ -48,16 +79,14 @@ class DoctorController extends Controller
         }
        
         $result['schedule']=DB::table('doctors')->where(['doctor_status'=>0])->get();
-        return view('doctor/doctor_profile_manage',$result);
+        $doctor_name['name']=DB::table('doctors')->get();
+        return view('doctor/doctor_profile_manage')->with($result)->with($doctor_name);
 
     }
   
     public function doctor_profile_manage_process(Request $request)
     {
         
-        // $model=Doctor::find($request->post('id'));
-        // $msg="Profile Updated";
-
         if($request->post('id')>0){
             $model=Doctor::find($request->post('id'));
             $msg="Profile Updated";
@@ -87,7 +116,6 @@ class DoctorController extends Controller
        $model->doctor_address=$request->post('doctor_address');   
        $model->doctor_gender=$request->post('doctor_gender');
        $model->doctor_number=$request->post('doctor_number');
-    //    $model->doctor_image=$request->post('doctor_image');    
        $model->doctor_status=1;
        $model->save();
        $request->session()->flash('message',$msg);

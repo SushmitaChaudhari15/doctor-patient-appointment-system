@@ -19,6 +19,8 @@
     <x-jet-authentication-card>
         <x-slot name="logo">
             <!-- <x-jet-authentication-card-logo /> -->
+            <span style="font-size: 200%; font-weight: 700;"> Medlife </span>
+
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

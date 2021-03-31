@@ -2,6 +2,6 @@
 
 return [
 
-   'SITE_NAME'=>'HealthCare'
+   'SITE_NAME'=>'Medlife'
 
 ];

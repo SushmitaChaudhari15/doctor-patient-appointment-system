@@ -23,7 +23,7 @@
         <div class="container">
             <div class="section-title">
                 <span>Our Services</span>
-                <h2>Our Healthcare Services</h2>
+                <h2>Our Medlife Services</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua. Quis ipsum suspendisse</p>
             </div>
@@ -33,12 +33,11 @@
                         <div class="icon">
                             <i class="flaticon-bacteria"></i>
                         </div>
-                        <a href="single-services.html">
-                            <h3>COVID-19 Consulting</h3>
-                        </a>
+                         
+                            <h3>COVID-19 Consulting  </h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore dolore</p>
-                        <a href="single-services.html" class="read-btn">Read More +</a>
+                          
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -46,12 +45,11 @@
                         <div class="icon">
                             <i class="flaticon-shield"></i>
                         </div>
-                        <a href="single-services.html">
-                            <h3>Special Follow Up</h3>
-                        </a>
+                         
+                            <h3>Special Follow Up  </h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore dolore</p>
-                        <a href="single-services.html" class="read-btn">Read More +</a>
+                          
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -59,12 +57,11 @@
                         <div class="icon">
                             <i class="flaticon-beauty-treatment"></i>
                         </div>
-                        <a href="single-services.html">
-                            <h3>Dermatology</h3>
-                        </a>
+                         
+                            <h3>Dermatology  </h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore dolore</p>
-                        <a href="single-services.html" class="read-btn">Read More +</a>
+                          
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -72,12 +69,11 @@
                         <div class="icon">
                             <i class="flaticon-mental-health"></i>
                         </div>
-                        <a href="single-services.html">
-                            <h3>Mental Health</h3>
-                        </a>
+                         
+                            <h3>Mental Health  </h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore dolore</p>
-                        <a href="single-services.html" class="read-btn">Read More +</a>
+                          
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -85,12 +81,11 @@
                         <div class="icon">
                             <i class="flaticon-crutches"></i>
                         </div>
-                        <a href="single-services.html">
-                            <h3>Orthopedics</h3>
-                        </a>
+                         
+                            <h3>Orthopedics  </h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore dolore</p>
-                        <a href="single-services.html" class="read-btn">Read More +</a>
+                          
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -98,28 +93,14 @@
                         <div class="icon">
                             <i class="flaticon-pregnancy"></i>
                         </div>
-                        <a href="single-services.html">
-                            <h3>Gynecological</h3>
-                        </a>
+                         
+                            <h3>Gynecological  </h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore dolore</p>
-                        <a href="single-services.html" class="read-btn">Read More +</a>
+                          
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12">
-                    <div class="pagination-area">
-                        <a href="#" class="prev page-numbers">
-                            <i class="fa fa-chevron-left"></i>
-                        </a>
-                        <a href="#" class="page-numbers">1</a>
-                        <span class="page-numbers current" aria-current="page">2</span>
-                        <a href="#" class="page-numbers">3</a>
-                        <a href="#" class="page-numbers">4</a>
-                        <a href="#" class="next page-numbers">
-                            <i class="fa fa-chevron-right"></i>
-                        </a>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </section>
@@ -133,17 +114,24 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="step-three-content">
-                        <span>Step 3</span>
-                        <h3>Pick Up Your Prescription from Your Local Doctor.</h3>
-                        <p>Many healthcare systems around the world together with government agencies and startup
-                            companies are building and delivering Telehealth</p>
-                        <b>We can send your prescription directly to your local pharmacy for easy pick-up. Many
-                            healthcare systems around the world together with government agencies and startup companies
-                            are building and delivering Telehealth</b>
+                      
+                        <h3>Book your appointment to Your Local Doctor.</h3>
+                     
+                        <b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis!</b>
                         <div class="step-btn">
-                            <a href="#" class="default-btn">
-                                Make Appointment
-                                <span></span>
+                        @if (Route::has('login'))
+                                @auth
+                                    <a href="{{url('appointment')}}/{{Auth::user()->id}}" class="default-btn">
+                                    Book Appointment
+                                        <span></span>
+                                    </a>
+                                  @else
+                                   <a href="{{url('appointment')}}" class="default-btn">
+                                   Book Appointment
+                                        <span></span>
+                                    </a>
+                                    @endauth
+                                   @endif
                             </a>
                         </div>
                     </div>
@@ -163,17 +151,17 @@
                 <div class="col-lg-5">
                     <div class="consult-content">
                         <span>Online Consult</span>
-                        <h3>Get 24/7 Care Right From Your Phone</h3>
+                        <h3>Get 24/7 Care Right </h3>
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
                             been the industry's standard dummy</p>
                         <ul class="list">
                             <li>
                                 <i class="flaticon-check-1"></i>
-                                Get unlimited 24/7 Video Chat with a provider at no extra cost
+                                Get unlimited 24/7 contact with a provider at no extra cost
                             </li>
                             <li>
                                 <i class="flaticon-check-1"></i>
-                                Easily book appointments and renew prescriptions
+                                Easily book appointments 
                             </li>
                             <li>
                                 <i class="flaticon-check-1"></i>
@@ -181,7 +169,7 @@
                             </li>
                             <li>
                                 <i class="flaticon-check-1"></i>
-                                Have a Remote Visit with your primary care provider over video
+                                Have a Remote Visit with your primary care provider 
                             </li>
                             <li>
                                 <i class="flaticon-check-1"></i>
